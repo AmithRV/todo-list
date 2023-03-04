@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HashModal from "./HashModal";
+import axios from '../helpers/axios';
+
 // import { ToastContainer, toast } from 'react-toastify';
 
 function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
@@ -25,11 +27,33 @@ function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
     };
 
     const removeItemFromList = (itemId) => {
+
         const updatedItems = list.filter(item => item?.id !== itemId);
         setList(updatedItems);
+
+        axios.delete('/remove-item', {
+            data: {
+                id: itemId
+            }
+        }).then(() => {
+        }).catch((error) => {
+        }).finally(() => {
+        })
     }
 
-    
+    const getTodoList = () => {
+        axios.get('/list')
+            .then((response) => {
+                console.log('list : ', response)
+            }).catch((error) => {
+            }).finally(() => {
+            })
+    }
+
+    useEffect(() => {
+        getTodoList();
+    }, [])
+
     return (
         <>
             <div className="body-wrap" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>

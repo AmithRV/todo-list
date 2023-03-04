@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import axios from '../helpers/axios';
 
 function HashModal({ type, setType, setList, todoList, setBackgroundImageUrl }) {
 
@@ -10,6 +11,17 @@ function HashModal({ type, setType, setList, todoList, setBackgroundImageUrl }) 
         if (inputValue === '') {
             setIsError(true);
         } else {
+            axios.post(`/add-to-list`, {
+                data: {
+                    id: todoList?.length + 1,
+                    value: inputValue,
+                    isCompleted: false
+                }
+            }).then(() => {
+            }).catch((error) => {
+            }).finally(() => {
+            })
+
             setIsLoading(true);
             setType('');
             await setList([...todoList, { id: todoList?.length + 1, value: inputValue, isCompleted: false }])
@@ -34,6 +46,7 @@ function HashModal({ type, setType, setList, todoList, setBackgroundImageUrl }) 
             setIsError(false);
         }
     }, [inputValue])
+
     return (
         <>
             <div className="hash-modal-modal-wrap" >
