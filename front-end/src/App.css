@@ -22,10 +22,6 @@
   height: 60px;
 }
 
-.body-wrap {
-  height: calc(100% - 130px);
-}
-
 .cardlist {
   width: 80%;
   border: 1px solid #212e3e !important;
@@ -34,9 +30,17 @@
   padding-left: 25px;
   padding-top: 25px;
   padding-right: 25px;
+  overflow: scroll;
+}
+
+.cardlist::-webkit-scrollbar{
+  width: 0;
 }
 
 .body-wrap {
+  height: calc(100% - 130px);
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   align-items: center;
   background-image: url('https://media.istockphoto.com/id/1448813542/photo/artificial-intelligence-neural-network-concept.jpg?s=612x612&w=0&k=20&c=cmEWxBQ0ykbCw_jqzN5--pjKt2rkcm7ozBzyxjm8jfE=');
@@ -65,7 +69,8 @@
 
 .checkbox-label {
   margin-left: 10px;
-  width: 100%;
+  overflow-wrap: break-word;
+  width: 94%;
 }
 
 .checkbox-label-line-through {
@@ -185,6 +190,18 @@ body {
   margin-top: 10px;
 }
 
+.hash-input-error {
+  border: 2px solid red;
+  height: 30px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.hash-input-error::placeholder {
+  color: red;
+  font-weight: 400;
+}
+
 
 .hash-modal-modal-footer {
   display: flex;
@@ -211,7 +228,7 @@ body {
 .menu-wrap {
   border: 1px solid #212e3e !important;
   width: 30%;
-  height: 80px;
+  height: 115px;
   position: absolute;
   right: 50px;
   top: 50px;

@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import HashModal from "./HashModal";
+// import { ToastContainer, toast } from 'react-toastify';
 
-function Body({ type, setType }) {
+function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
 
     const [list, setList] = useState([]);
     const [selectedItemIdForDelete, setSelectedItemIdForDelete] = useState();
@@ -28,9 +29,11 @@ function Body({ type, setType }) {
         setList(updatedItems);
     }
 
+    
     return (
         <>
-            <div className="body-wrap">
+            <div className="body-wrap" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
+
                 <div className="body">
                     <div className="cardlist">
                         {
@@ -60,11 +63,13 @@ function Body({ type, setType }) {
                                                         src="./icons/check.svg"
                                                         className="check-icon action-icon"
                                                         onClick={() => { removeItemFromList(item?.id) }}
+                                                        alt={'icon'}
                                                     />
                                                     <img
                                                         src="./icons/close.svg"
                                                         className="close-icon action-icon"
                                                         onClick={() => { setSelectedItemIdForDelete('') }}
+                                                        alt={'icon'}
                                                     />
                                                 </div>
                                             ) : (
@@ -72,6 +77,7 @@ function Body({ type, setType }) {
                                                     src="./icons/trash.svg"
                                                     className="trash-icon action-icon"
                                                     onClick={() => { setSelectedItemIdForDelete(item?.id) }}
+                                                    alt={'icon'}
                                                 />
                                             )
                                         }
@@ -84,7 +90,14 @@ function Body({ type, setType }) {
             </div>
 
             {
-                (type === 'decrypt' || type === 'add') && <HashModal type={type} setType={setType} setList={setList} todoList={list} />
+                (type === 'decrypt' || type === 'add' || type === 'chang-bg-image') &&
+                <HashModal
+                    type={type}
+                    setType={setType}
+                    setList={setList}
+                    todoList={list}
+                    setBackgroundImageUrl={setBackgroundImageUrl}
+                />
             }
         </>
     )

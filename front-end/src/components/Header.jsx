@@ -1,16 +1,37 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-function Header({ setType }) {
+function Header({ setType, isBgImageLoading }) {
+    const ref = useRef(null);
     const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (ref.current && !ref.current.contains(event.target)) {
+                setIsMenuVisible(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [ref]);
 
     return (
         <>
             <div className='header-wrap'>
                 <div className="header">
-                    <div className="loader">
+                    <div className="loader" title="Active">
                         <div className="circle">
                         </div>
                     </div>
+
+                    {
+                        (isBgImageLoading) ? (
+                            <span>Loading...</span>
+                        ) : (<></>)
+                    }
 
                     <div className="settings">
                         <img
@@ -24,7 +45,7 @@ function Header({ setType }) {
 
             {
                 (isMenuVisible) ? (
-                    <div className="menu-wrap">
+                    <div className="menu-wrap" ref={ref}>
                         <div className="menu">
                             <span
                                 className="menu-item"
@@ -45,6 +66,16 @@ function Header({ setType }) {
                                 }}
                             >
                                 Add
+                            </span>
+
+                            <span
+                                className="menu-item"
+                                onClick={() => {
+                                    setType('chang-bg-image');
+                                    setIsMenuVisible(false);
+                                }}
+                            >
+                                Change background
                             </span>
                         </div>
                     </div>
