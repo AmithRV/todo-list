@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import HashModal from "./HashModal";
 import axios from '../helpers/axios';
-
-// import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
 
     const [list, setList] = useState([]);
     const [selectedItemIdForDelete, setSelectedItemIdForDelete] = useState();
+    const [refresh, setRefresh] = useState(false);
 
     const updateArray = (itemId, isCompleted) => {
         setList(
@@ -44,18 +44,19 @@ function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
     const getTodoList = () => {
         axios.get('/list')
             .then((response) => {
-                console.log('list : ', response)
-            }).catch((error) => {
-            }).finally(() => {
+                console.log('list : ', response);
+                setList(response.data)
             })
     }
 
     useEffect(() => {
         getTodoList();
-    }, [])
+    }, [refresh])
 
     return (
         <>
+            <ToastContainer />
+
             <div className="body-wrap" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
 
                 <div className="body">
@@ -121,6 +122,9 @@ function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
                     setList={setList}
                     todoList={list}
                     setBackgroundImageUrl={setBackgroundImageUrl}
+                    callBack={() => {
+                        setRefresh(!refresh)
+                    }}
                 />
             }
         </>

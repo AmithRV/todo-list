@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"
 import axios from '../helpers/axios';
+import { toast } from 'react-toastify';
 
-function HashModal({ type, setType, setList, todoList, setBackgroundImageUrl }) {
+function HashModal({ type, setType, setList, todoList, setBackgroundImageUrl,callBack }) {
 
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
 
     const addTask = async (e) => {
+        setIsLoading(true);
         if (inputValue === '') {
             setIsError(true);
         } else {
@@ -18,14 +20,19 @@ function HashModal({ type, setType, setList, todoList, setBackgroundImageUrl }) 
                     isCompleted: false
                 }
             }).then(() => {
+                toast.success('Added');
+                callBack();
             }).catch((error) => {
+                toast.error('Error')
             }).finally(() => {
+                setType('');
+                setIsLoading(false);
             })
 
-            setIsLoading(true);
-            setType('');
-            await setList([...todoList, { id: todoList?.length + 1, value: inputValue, isCompleted: false }])
-            setIsLoading(false);
+            // setIsLoading(true);
+            // setType('');
+            // await setList([...todoList, { id: todoList?.length + 1, value: inputValue, isCompleted: false }])
+            // setIsLoading(false);
         }
 
     }
