@@ -40,6 +40,12 @@ function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
         getTodoList(setLoading, setList);
     }, [refresh])
 
+    useEffect(()=>{
+        if(backgroundImageUrl){
+            console.log('backgroundImageUrl : ', backgroundImageUrl)
+        }
+    },[backgroundImageUrl])
+
     return (
         <>
             <ToastContainer pauseOnHover={false} />

@@ -61,4 +61,17 @@ const addBackgroundImage = (url, setBackgroundImageUrl,setType,setIsLoading) => 
         setIsLoading(false);
     })
 }
-export { getTodoList, addTasktoList, updatListItem, removeItemFromList, addBackgroundImage };
+
+const getBackgroundImageUrl = (setBackgroundImageUrl) => {
+    axios.get('/background-image')
+        .then((response) => {
+            setBackgroundImageUrl(response?.data?.url);
+        })
+        .catch(() => {
+            // toast.error('something went wrong.');
+        })
+        .finally(() => {})
+}
+
+
+export { getTodoList, addTasktoList, updatListItem, removeItemFromList, addBackgroundImage, getBackgroundImageUrl };

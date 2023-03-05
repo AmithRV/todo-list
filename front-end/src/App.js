@@ -4,11 +4,14 @@ import Body from './components/Body';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import 'react-toastify/dist/ReactToastify.css';
+import { getBackgroundImageUrl } from './helpers/request';
 
 function App() {
   const [type, setType] = useState('');
 
-  const [backgroundImageUrl, setBackgroundImageUrl] = useState('https://media.istockphoto.com/id/1448813542/photo/artificial-intelligence-neural-network-concept.jpg?s=612x612&w=0&k=20&c=cmEWxBQ0ykbCw_jqzN5--pjKt2rkcm7ozBzyxjm8jfE=');
+  // https://media.istockphoto.com/id/1448813542/photo/artificial-intelligence-neural-network-concept.jpg?s=612x612&w=0&k=20&c=cmEWxBQ0ykbCw_jqzN5--pjKt2rkcm7ozBzyxjm8jfE=
+
+  const [backgroundImageUrl, setBackgroundImageUrl] = useState('');
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -21,7 +24,12 @@ function App() {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
+
   }, []);
+
+  useEffect(()=>{
+    getBackgroundImageUrl(setBackgroundImageUrl);
+  },[backgroundImageUrl])
 
   return (
     <div className="app">
