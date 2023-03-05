@@ -10,6 +10,16 @@ function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
     const [refresh, setRefresh] = useState(false);
 
     const updateArray = (itemId, isCompleted) => {
+        axios.patch('/update-item', {
+            data: {
+                id: itemId,
+                isCompleted: !isCompleted
+            }
+        }).then(() => {
+        }).catch((error) => {
+        }).finally(() => {
+        })
+
         setList(
             (prevArray) => {
                 return prevArray.map((value) => {
@@ -31,11 +41,7 @@ function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
         const updatedItems = list.filter(item => item?.id !== itemId);
         setList(updatedItems);
 
-        axios.delete('/remove-item', {
-            data: {
-                id: itemId
-            }
-        }).then(() => {
+        axios.delete(`/remove-item/${itemId}`).then(() => {
         }).catch((error) => {
         }).finally(() => {
         })
@@ -55,7 +61,7 @@ function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
 
     return (
         <>
-            <ToastContainer />
+            <ToastContainer pauseOnHover={false} />
 
             <div className="body-wrap" style={{ backgroundImage: `url(${backgroundImageUrl})` }}>
 
@@ -69,10 +75,10 @@ function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
                                             type="checkbox"
                                             id="myCheckbox"
                                             className="checkbox"
-                                            onClick={(e) => {
+                                            onChange={(e) => {
                                                 updateArray(item?.id, item?.isCompleted)
                                             }}
-                                            value={(item?.isCompleted) ? (item?.isCompleted) : ('')}
+                                            checked={(item?.isCompleted) ? (item?.isCompleted) : ('')}
                                         />
                                         <label
                                             htmlFor="myCheckbox"

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import axios from '../helpers/axios';
 import { toast } from 'react-toastify';
 
-function HashModal({ type, setType, setList, todoList, setBackgroundImageUrl,callBack }) {
+function HashModal({ type, setType, setList, todoList, setBackgroundImageUrl, callBack }) {
 
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -22,17 +22,12 @@ function HashModal({ type, setType, setList, todoList, setBackgroundImageUrl,cal
             }).then(() => {
                 toast.success('Added');
                 callBack();
-            }).catch((error) => {
+            }).catch(() => {
                 toast.error('Error')
             }).finally(() => {
                 setType('');
                 setIsLoading(false);
             })
-
-            // setIsLoading(true);
-            // setType('');
-            // await setList([...todoList, { id: todoList?.length + 1, value: inputValue, isCompleted: false }])
-            // setIsLoading(false);
         }
 
     }
