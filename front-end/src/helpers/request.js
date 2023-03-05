@@ -5,21 +5,22 @@ const getTodoList = (setLoading, setList) => {
     setLoading(true);
     axios.get('/list')
         .then((response) => {
-            console.log('list : ', response?.data);
             setList(response?.data);
         })
         .catch(() => {
+            toast.error('something went wrong.');
         })
         .finally(() => {
             setLoading(false);
         })
 }
 
-const addTasktoList = (data, setLoading, setType) => {
+const addTasktoList = (data, setType) => {
     axios.post(`/add-to-list`, data)
         .then(() => {
             toast.success('Added');
         }).catch(() => {
+            toast.error('something went wrong.');
         }).finally(() => {
             setType('');
         })
@@ -40,7 +41,7 @@ const updatListItem = (itemId, isCompleted) => {
 
 const removeItemFromList = (itemId) => {
     axios.delete(`/remove-item/${itemId}`).then(() => {
-    }).catch((error) => {
+    }).catch(() => {
         toast.error('Error while deleting.');
     }).finally(() => {
     })
