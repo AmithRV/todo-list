@@ -21,7 +21,7 @@ function HashModal({ type, setType, setList, todoList, setBackgroundImageUrl, ca
             }
 
             await setList([...todoList, { id: todoList?.length + 1, value: inputValue, isCompleted: false }]);
-            addTasktoList(data, setIsLoading, setType);
+            addTasktoList(data, setType);
         }
 
     }

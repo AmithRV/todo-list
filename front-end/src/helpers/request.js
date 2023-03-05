@@ -18,7 +18,6 @@ const getTodoList = (setLoading, setList) => {
 const addTasktoList = (data, setType) => {
     axios.post(`/add-to-list`, data)
         .then(() => {
-            toast.success('Added');
         }).catch(() => {
             toast.error('something went wrong.');
         }).finally(() => {
