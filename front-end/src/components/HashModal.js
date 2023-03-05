@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from '../helpers/axios';
-import { toast } from 'react-toastify';
+import { addTasktoList } from "../helpers/request";
 
 function HashModal({ type, setType, setList, todoList, setBackgroundImageUrl, callBack }) {
 
@@ -8,26 +7,21 @@ function HashModal({ type, setType, setList, todoList, setBackgroundImageUrl, ca
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
 
-    const addTask = async (e) => {
+    const addTask = async () => {
         setIsLoading(true);
         if (inputValue === '') {
             setIsError(true);
         } else {
-            axios.post(`/add-to-list`, {
+            const data = {
                 data: {
                     id: todoList?.length + 1,
                     value: inputValue,
                     isCompleted: false
                 }
-            }).then(() => {
-                toast.success('Added');
-                callBack();
-            }).catch(() => {
-                toast.error('Error')
-            }).finally(() => {
-                setType('');
-                setIsLoading(false);
-            })
+            }
+
+            await setList([...todoList, { id: todoList?.length + 1, value: inputValue, isCompleted: false }]);
+            addTasktoList(data, setIsLoading, setType);
         }
 
     }

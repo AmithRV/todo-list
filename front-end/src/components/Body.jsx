@@ -1,25 +1,16 @@
 import { useEffect, useState } from "react";
 import HashModal from "./HashModal";
-import axios from '../helpers/axios';
 import { ToastContainer } from 'react-toastify';
+import { getTodoList, removeItemFromList, updatListItem } from "../helpers/request";
 
 function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
 
     const [list, setList] = useState([]);
-    const [selectedItemIdForDelete, setSelectedItemIdForDelete] = useState();
     const [refresh, setRefresh] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [selectedItemIdForDelete, setSelectedItemIdForDelete] = useState();
 
     const updateArray = (itemId, isCompleted) => {
-        axios.patch('/update-item', {
-            data: {
-                id: itemId,
-                isCompleted: !isCompleted
-            }
-        }).then(() => {
-        }).catch((error) => {
-        }).finally(() => {
-        })
-
         setList(
             (prevArray) => {
                 return prevArray.map((value) => {
@@ -34,29 +25,19 @@ function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
                     }
                 });
             });
+
+        updatListItem(itemId, isCompleted);
+
     };
 
-    const removeItemFromList = (itemId) => {
-
+    const removeItem = (itemId)=>{
+        removeItemFromList(itemId);
         const updatedItems = list.filter(item => item?.id !== itemId);
         setList(updatedItems);
-
-        axios.delete(`/remove-item/${itemId}`).then(() => {
-        }).catch((error) => {
-        }).finally(() => {
-        })
-    }
-
-    const getTodoList = () => {
-        axios.get('/list')
-            .then((response) => {
-                console.log('list : ', response);
-                setList(response.data)
-            })
     }
 
     useEffect(() => {
-        getTodoList();
+        getTodoList(setLoading, setList);
     }, [refresh])
 
     return (
@@ -67,6 +48,16 @@ function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
 
                 <div className="body">
                     <div className="cardlist">
+
+                        {
+                            (loading) ? (
+                                <div className="list-element">
+                                    <span className="list-item-loader"></span>
+                                </div>
+                            ) : (<></>)
+                        }
+
+
                         {
                             list?.map((item, index) => {
                                 return (
@@ -75,9 +66,7 @@ function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
                                             type="checkbox"
                                             id="myCheckbox"
                                             className="checkbox"
-                                            onChange={(e) => {
-                                                updateArray(item?.id, item?.isCompleted)
-                                            }}
+                                            onChange={(e) => { updateArray(item?.id, item?.isCompleted) }}
                                             checked={(item?.isCompleted) ? (item?.isCompleted) : ('')}
                                         />
                                         <label
@@ -93,7 +82,7 @@ function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
                                                     <img
                                                         src="./icons/check.svg"
                                                         className="check-icon action-icon"
-                                                        onClick={() => { removeItemFromList(item?.id) }}
+                                                        onClick={() => { removeItem(item?.id) }}
                                                         alt={'icon'}
                                                     />
                                                     <img

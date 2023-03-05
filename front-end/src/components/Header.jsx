@@ -27,12 +27,6 @@ function Header({ setType, isBgImageLoading }) {
                         </div>
                     </div>
 
-                    {
-                        (isBgImageLoading) ? (
-                            <span>Loading...</span>
-                        ) : (<></>)
-                    }
-
                     <div className="settings">
                         <img
                             src="./icons/settings.svg"
