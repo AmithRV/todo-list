@@ -30,7 +30,7 @@ function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
 
     };
 
-    const removeItem = (itemId)=>{
+    const removeItem = (itemId) => {
         removeItemFromList(itemId);
         const updatedItems = list.filter(item => item?.id !== itemId);
         setList(updatedItems);
@@ -117,9 +117,8 @@ function Body({ type, setType, setBackgroundImageUrl, backgroundImageUrl }) {
                     setList={setList}
                     todoList={list}
                     setBackgroundImageUrl={setBackgroundImageUrl}
-                    callBack={() => {
-                        setRefresh(!refresh)
-                    }}
+                    callBack={() => { setRefresh(!refresh) }}
+                    backgroundImageUrl={backgroundImageUrl}
                 />
             }
         </>

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-function Header({ setType, isBgImageLoading }) {
+function Header({ setType }) {
     const ref = useRef(null);
     const [isMenuVisible, setIsMenuVisible] = useState(false);
 

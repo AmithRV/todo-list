@@ -27,7 +27,6 @@ function App() {
     <div className="app">
       <Header
         setType={setType}
-        setBackgroundImageUrl={setBackgroundImageUrl}
       />
 
       <Body

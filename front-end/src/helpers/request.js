@@ -45,4 +45,20 @@ const removeItemFromList = (itemId) => {
     }).finally(() => {
     })
 }
-export { getTodoList, addTasktoList, updatListItem, removeItemFromList };
+
+const addBackgroundImage = (url, setBackgroundImageUrl,setType,setIsLoading) => {
+    setIsLoading(true);
+    axios.post('/add-background-image', {
+        data: {
+            url: url,
+        }
+    }).then(() => {
+        setBackgroundImageUrl(url);
+    }).catch(() => {
+        toast.error('something went wrong.');
+    }).finally(() => {
+        setType('');
+        setIsLoading(false);
+    })
+}
+export { getTodoList, addTasktoList, updatListItem, removeItemFromList, addBackgroundImage };

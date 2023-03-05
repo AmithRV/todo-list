@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { addTasktoList } from "../helpers/request";
+import { addBackgroundImage, addTasktoList } from "../helpers/request";
 
 function HashModal({ type, setType, setList, todoList, setBackgroundImageUrl, callBack }) {
 
@@ -30,10 +30,7 @@ function HashModal({ type, setType, setList, todoList, setBackgroundImageUrl, ca
         if (inputValue === '') {
             setIsError(true);
         } else {
-            setIsLoading(true);
-            setBackgroundImageUrl(inputValue);
-            setType('');
-            setIsLoading(false);
+            addBackgroundImage(inputValue,setBackgroundImageUrl,setType,setIsLoading);
         }
     }
 
